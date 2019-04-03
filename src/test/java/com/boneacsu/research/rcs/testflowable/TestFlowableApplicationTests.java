@@ -25,12 +25,17 @@ import java.util.Map;
 public class TestFlowableApplicationTests {
 
 	public static final String CONFIRM_EMAIL_USER_TASK = "confirm-email-user-task";
+
 	@Autowired
 	private RuntimeService runtimeService;
+
 	@Autowired
 	private TaskService taskService;
 
-	private static final String CUSTOMER_ID = "customerId";
+	@Autowired
+	private EmailService emailService;
+
+	private static final String CUSTOMER_ID = "1";
 	private static final String EMAIL = "email@email.com";
 
 	@Test
@@ -57,12 +62,14 @@ public class TestFlowableApplicationTests {
 				this.taskService.complete(task.getId());
 			}
 		);
+
+		Assert.assertEquals(this.emailService.sends.get(EMAIL).get(), 1);
 	}
 
 	String beginCustomerEnrollmentProcess(String customerId, String email) {
 		Map<String, Object> vars = new HashMap<>();
-		vars.put(CUSTOMER_ID, customerId);
-		vars.put(EMAIL, email);
+		vars.put("customerId", customerId);
+		vars.put("email", email);
 		ProcessInstance processInstance = this.runtimeService.startProcessInstanceByKey("signup-process", vars);
 		return processInstance.getId();
 	}

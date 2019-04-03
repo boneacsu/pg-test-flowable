@@ -10,20 +10,21 @@
              targetNamespace="http://www.flowable.org/processdef">
 
     <process id="signup-process" name="sign up process" isExecutable="true">
-        <startEvent id="start" name="start" flowable:initiator="initiator"></startEvent>
+        <startEvent id="start" name="start" flowable:initiator="initiator"/>
 
-        <sequenceFlow sourceRef="start" targetRef="confirm-email-user-task"></sequenceFlow>
+        <sequenceFlow sourceRef="start" targetRef="confirm-email-user-task"/>
 
         <userTask id="confirm-email-user-task" name="confirm email"
-                                    flowable:assignee="${initiator}"></userTask>
+                                    flowable:assignee="${initiator}"/>
 
-        <sequenceFlow sourceRef="confirm-email-user-task" targetRef="send-email-service-task"></sequenceFlow>
+        <sequenceFlow sourceRef="confirm-email-user-task" targetRef="send-email-service-task"/>
 
         <serviceTask id="send-email-service-task" name="send email"
-                     flowable:expression="#{emailService.sendWelcomeEmail(customerId, email)}"></serviceTask>
-        <sequenceFlow sourceRef="send-email-service-task" targetRef="end-event"></sequenceFlow>
+                     flowable:expression="#{emailService.sendWelcomeEmail(customerId, email)}"/>
 
-        <endEvent id="end-event" name="end"></endEvent>
+        <sequenceFlow sourceRef="send-email-service-task" targetRef="end-event"/>
+
+        <endEvent id="end-event" name="end"/>
 
     </process>
 </definitions>
