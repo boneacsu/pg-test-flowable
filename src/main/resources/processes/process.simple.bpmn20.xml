@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.flowable.org/processdef">
+
+    <process id="signup-process" name="sign up process" isExecutable="true">
+        <startEvent id="start" name="start" flowable:initiator="initiator"></startEvent>
+
+        <sequenceFlow sourceRef="start" targetRef="confirm-email-user-task"></sequenceFlow>
+
+        <userTask id="confirm-email-user-task" name="confirm email"
+                                    flowable:assignee="${initiator}"></userTask>
+
+        <sequenceFlow sourceRef="confirm-email-user-task" targetRef="send-email-service-task"></sequenceFlow>
+
+        <serviceTask id="send-email-service-task" name="send email"
+                     flowable:expression="#{emailService.sendWelcomeEmail(customerId, email)}"></serviceTask>
+        <sequenceFlow sourceRef="send-email-service-task" targetRef="end-event"></sequenceFlow>
+
+        <endEvent id="end-event" name="end"></endEvent>
+
+    </process>
+</definitions>
