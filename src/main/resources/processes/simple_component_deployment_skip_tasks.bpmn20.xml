@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             xmlns:activiti="http://activiti.org/bpmn"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.flowable.org/processdef">
+
+    <process id="deployProcessComponent" name="DeploymentProcess">
+        <startEvent id="start" name="start" flowable:initiator="initiator"/>
+
+        <sequenceFlow sourceRef="start" targetRef="userTask1"/>
+
+        <userTask id="userTask1" name="User Task1" activiti:skipExpression="${execution.getVariable('skipu1')}"/>
+
+        <sequenceFlow sourceRef="userTask1" targetRef="serviceTask1"/>
+
+        <userTask id="serviceTask1" name="Service Task1" activiti:skipExpression="${execution.getVariable('skips1')}"/>
+
+        <sequenceFlow sourceRef="serviceTask1" targetRef="end-event"/>
+
+        <endEvent id="end-event" name="end"/>
+    </process>
+</definitions>

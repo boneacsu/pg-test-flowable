@@ -1,4 +1,4 @@
-package com.boneacsu.research.rcs.testflowable;
+package com.boneacsu.research.rpa.testflowable;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;

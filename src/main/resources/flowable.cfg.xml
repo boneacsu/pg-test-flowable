@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="processEngineConfiguration" class="org.flowable.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+
+        <property name="jdbcUrl" value="jdbc:sqlserver://192.168.11.128:1433;databaseName=flowable-runtime" />
+        <property name="jdbcDriver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+        <property name="jdbcUsername" value="sa" />
+        <property name="jdbcPassword" value="Admin123" />
+
+        <!-- Database configurations -->
+        <property name="databaseSchemaUpdate" value="true" />
+
+    </bean>
+</beans>
