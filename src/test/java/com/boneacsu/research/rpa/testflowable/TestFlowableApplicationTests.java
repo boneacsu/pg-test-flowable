@@ -1,5 +1,6 @@
 package com.boneacsu.research.rpa.testflowable;
 
+import com.boneacsu.research.rpa.testflowable.services.EmailService;
 import lombok.extern.log4j.Log4j2;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;

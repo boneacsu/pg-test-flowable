@@ -3,7 +3,13 @@ package com.boneacsu.research.rpa.testflowable;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,14 +21,3 @@ public class TestFlowableApplication {
 	}
 }
 
-@Log4j2
-@Service
-class EmailService {
-	ConcurrentHashMap<String, AtomicInteger> sends = new ConcurrentHashMap<>();
-
-	public void sendWelcomeEmail(String customerId, String email) {
-		log.info("sending welcome email for {} to {}", customerId, email);
-		sends.computeIfAbsent(email, c -> new AtomicInteger());
-		sends.get(email).incrementAndGet();
-	}
-}

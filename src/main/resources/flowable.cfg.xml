@@ -5,15 +5,17 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+        <property name="url" value="jdbc:sqlserver://192.168.11.128:1433;databaseName=flowable-runtime" />
+        <property name="username" value="sa"/>
+        <property name="password" value="Admin123" />
+    </bean>
+
     <bean id="processEngineConfiguration" class="org.flowable.engine.impl.cfg.StandaloneProcessEngineConfiguration">
-
-        <property name="jdbcUrl" value="jdbc:sqlserver://192.168.11.128:1433;databaseName=flowable-runtime" />
-        <property name="jdbcDriver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-        <property name="jdbcUsername" value="sa" />
-        <property name="jdbcPassword" value="Admin123" />
-
+        <property name="dataSource" ref="dataSource" />
         <!-- Database configurations -->
         <property name="databaseSchemaUpdate" value="true" />
-
     </bean>
 </beans>
