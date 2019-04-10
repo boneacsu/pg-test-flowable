@@ -59,8 +59,8 @@ public class SkipExpressionsTests {
 
         Assert.assertEquals(processInstanceId, historicProcessInstance.getId());
 
-        Assert.assertEquals(runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).list(), 0L);
+        Assert.assertEquals(runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).list().size(), 0L);
 
-        Assert.assertEquals(runtimeService.createExecutionQuery().processInstanceId(processInstanceId).list(), 0L);
+        Assert.assertEquals(runtimeService.createExecutionQuery().processInstanceId(processInstanceId).list().size(), 0L);
     }
 }
