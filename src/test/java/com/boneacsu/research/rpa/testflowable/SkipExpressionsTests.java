@@ -2,10 +2,13 @@ package com.boneacsu.research.rpa.testflowable;
 
 import com.boneacsu.research.rpa.testflowable.services.ServiceThrowingError;
 import lombok.extern.log4j.Log4j2;
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
+import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
+import org.flowable.task.api.history.HistoricTaskInstance;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,6 +33,9 @@ public class SkipExpressionsTests {
     @Autowired
     private ServiceThrowingError serviceThrowingError;
 
+    @Autowired
+    private HistoryService historyService;
+
     @Test
     public void contextLoads() throws Exception{
         Map<String, Object> varsInit = new HashMap<>();
@@ -44,5 +50,17 @@ public class SkipExpressionsTests {
         log.info("Process instance ID: {} ", processInstanceId);
 
         Assert.assertNotNull(processInstanceId);
+
+        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery()
+                .processInstanceId(processInstanceId)
+                .singleResult();
+
+        Assert.assertNotNull(historicProcessInstance);
+
+        Assert.assertEquals(processInstanceId, historicProcessInstance.getId());
+
+        Assert.assertEquals(runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).list(), 0L);
+
+        Assert.assertEquals(runtimeService.createExecutionQuery().processInstanceId(processInstanceId).list(), 0L);
     }
 }
