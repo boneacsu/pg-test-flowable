@@ -13,15 +13,19 @@
     <process id="deployProcessComponent" name="DeploymentProcess">
         <startEvent id="start" name="start" flowable:initiator="initiator"/>
 
-        <sequenceFlow sourceRef="start" targetRef="userTask1"/>
+        <sequenceFlow sourceRef="start" targetRef="serviceTask1"/>
 
-        <userTask id="userTask1" name="User Task1" activiti:skipExpression="${execution.getVariable('skipu1')}"/>
+        <serviceTask id="serviceTask1" name="Service Task1"
+                     activiti:skipExpression="#{contextResolverService.shouldSkipTask(execution)}"
+                     flowable:expression="#{simpleService.logMessage('Skipping service task 1')}"/>
 
-        <sequenceFlow sourceRef="userTask1" targetRef="serviceTask1"/>
+        <sequenceFlow sourceRef="serviceTask1" targetRef="serviceTask2"/>
 
-        <userTask id="serviceTask1" name="Service Task1" activiti:skipExpression="${execution.getVariable('skips1')}"/>
+        <serviceTask id="serviceTask2" name="Service Task2"
+                  activiti:skipExpression="${execution.getVariable('skipUserTask2')}"
+                  flowable:expression="#{simpleService.logMessage('Skipping service task 2')}"/>
 
-        <sequenceFlow sourceRef="serviceTask1" targetRef="end-event"/>
+        <sequenceFlow sourceRef="serviceTask2" targetRef="end-event"/>
 
         <endEvent id="end-event" name="end"/>
     </process>

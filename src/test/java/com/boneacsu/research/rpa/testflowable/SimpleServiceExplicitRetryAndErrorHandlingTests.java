@@ -21,7 +21,7 @@ import java.util.Map;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Log4j2
-public class TestSimpleServiceExplicitRetryAndErrorHandling {
+public class SimpleServiceExplicitRetryAndErrorHandlingTests {
     @Autowired
     private RuntimeService runtimeService;
 

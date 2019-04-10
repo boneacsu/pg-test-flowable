@@ -22,7 +22,7 @@ import java.util.Map;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Log4j2
-public class TestComponentsFlowTests {
+public class CallActivityByCallingOtherWorkflowsTests {
 
 	public static final String CONFIRM_EMAIL_USER_TASK = "confirm-email-user-task";
 

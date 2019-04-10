@@ -9,6 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service("simpleService")
 public class SimpleService {
     public void doSimpleSynchCall(String var1, String var2) {
-        log.info("executing simple synch call with vars {} and {}", var1, var2);
+        log.info("Executing simple synch call with vars {} and {}", var1, var2);
+    }
+
+    public void logMessage(String message)
+    {
+        log.info("Executing simplest thing ever :) : {} ", message);
     }
 }
