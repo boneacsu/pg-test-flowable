@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.flowable.org/processdef">
+  <process id="errorHandlingProcess2" name="TestErrorHandler" isExecutable="true">
+    <startEvent id="startEvent1"/>
+    <endEvent id="endEvent"/>
+    
+    <sequenceFlow id="flow1" sourceRef="startEvent1" targetRef="serviceWithErrorTask"/>
+    <serviceTask id="serviceWithErrorTask" flowable:expression="#{serviceWithError.execute(NOTHROW)}"/>
+    <sequenceFlow id="flow5" sourceRef="serviceWithErrorTask" targetRef="endEvent"/>
+
+    <boundaryEvent id="boundaryEvent" attachedToRef="serviceWithErrorTask">
+      <errorEventDefinition/>
+    </boundaryEvent>
+
+    <sequenceFlow id="flow6" sourceRef="boundaryEvent" targetRef="handleErrorUserTask"/>
+    
+    <userTask id="handleErrorUserTask" flowable:assignee="$INITIATOR">
+      <extensionElements>
+        <modeler:activiti-idm-initiator xmlns:modeler="http://flowable.org/modeler"><![CDATA[true]]></modeler:activiti-idm-initiator>
+      </extensionElements>
+    </userTask>
+    
+    <sequenceFlow id="flow2" sourceRef="handleErrorUserTask" targetRef="decideIfRetry"/>
+
+
+    <exclusiveGateway id="decideIfRetry"/>
+      <sequenceFlow id="flow3" sourceRef="decideIfRetry" targetRef="endEvent">
+        <conditionExpression xsi:type="tFormalExpression">${retry==false}</conditionExpression>
+      </sequenceFlow>
+      <sequenceFlow id="flow4" sourceRef="decideIfRetry" targetRef="serviceWithErrorTask">
+        <conditionExpression xsi:type="tFormalExpression">${retry==true}</conditionExpression>
+      </sequenceFlow>
+  </process>
+</definitions>

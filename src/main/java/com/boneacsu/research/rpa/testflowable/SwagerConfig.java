@@ -20,6 +20,6 @@ import java.util.Collections;
 @EnableSwagger2
 @Profile("dev")
 @Configuration
-//@ComponentScan(basePackages = "org.flowable.rest.service.api")
+@ComponentScan(basePackages = "org.flowable.rest.service.api")
 class SwaggerConfig {
 }
