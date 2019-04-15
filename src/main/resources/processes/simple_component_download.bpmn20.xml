@@ -15,7 +15,7 @@
         <sequenceFlow sourceRef="start" targetRef="executeRemoteAsynchCallByAgentDelegation"/>
 
         <serviceTask id="executeRemoteAsynchCallByAgentDelegation" name="Execute remote asynch call by agent delegation"
-                     flowable:class="com.boneacsu.research.rpa.testflowable.task.TriggerableServiceTask" flowable:async="true" flowable:triggerable="true"/>
+                     flowable:class="com.boneacsu.research.workflow.testflowable.task.TriggerableServiceTask" flowable:async="true" flowable:triggerable="true"/>
 
         <sequenceFlow sourceRef="executeRemoteAsynchCallByAgentDelegation" targetRef="executeSimpleSynchCall"/>
 

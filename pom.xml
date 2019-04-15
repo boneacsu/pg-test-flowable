@@ -8,7 +8,7 @@
 		<version>2.1.3.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.boneacsu.research.rpa</groupId>
+	<groupId>com.boneacsu.research.workflow</groupId>
 	<artifactId>test-flowable</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>test-flowable</name>

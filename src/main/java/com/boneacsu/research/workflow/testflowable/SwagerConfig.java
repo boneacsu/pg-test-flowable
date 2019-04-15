@@ -1,4 +1,4 @@
-package com.boneacsu.research.rpa.testflowable;
+package com.boneacsu.research.workflow.testflowable;
 
 import org.flowable.rest.service.api.RestResponseFactory;
 import org.springframework.context.annotation.Bean;
