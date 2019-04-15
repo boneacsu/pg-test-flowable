@@ -8,6 +8,7 @@ import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.variable.api.history.HistoricVariableInstance;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,12 +25,6 @@ import java.util.Map;
 public class PassCustomTaskVariablesViaDelegateTest {
     @Autowired
     private RuntimeService runtimeService;
-
-    @Autowired
-    private TaskService taskService;
-
-    @Autowired
-    private ServiceThrowingError serviceThrowingError;
 
     @Autowired
     private HistoryService historyService;
@@ -53,5 +48,29 @@ public class PassCustomTaskVariablesViaDelegateTest {
         log.info("Process instance ID: {} ", processInstanceId);
 
         Assert.assertNotNull(processInstanceId);
+
+        HistoricVariableInstance varMap =
+                historyService.createHistoricVariableInstanceQuery()
+                        .processInstanceId(processInstanceId)
+                        .variableName("map")
+                        .singleResult();
+
+        Map<String, String> map = (Map<String, String>) varMap.getValue();
+
+        Assert.assertNotNull(map);
+
+        Assert.assertEquals(3, map.size());
+
+        Assert.assertTrue(map.containsKey("one"));
+        Assert.assertTrue(map.containsKey("two"));
+        Assert.assertTrue(map.containsKey("three"));
+
+        HistoricVariableInstance varComplex =
+                historyService.createHistoricVariableInstanceQuery()
+                        .processInstanceId(processInstanceId)
+                        .variableName("complexObjectViaEnv")
+                        .singleResult();
+
+        Assert.assertNotNull("varComplex");
     }
 }

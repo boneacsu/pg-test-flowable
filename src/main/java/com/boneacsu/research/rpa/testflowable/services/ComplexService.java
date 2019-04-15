@@ -24,7 +24,7 @@ public class ComplexService {
         log.info("Simple processing of a map : {} ", map);
     }
 
-    public ObjectNode createComplexObject()
+    public ObjectNode createComplexObject(DelegateExecution ex)
     {
         log.info("Creating complex object ... ");
 
@@ -37,14 +37,18 @@ public class ComplexService {
 
         node.putPOJO("listOfStrings", array);
 
+        node.put("additionalField", "additionalFieldValue");
+
         log.info("Complex object has been built : {}", node);
+
+        ex.setVariable("complexObjectViaEnv" ,node);
 
         return node;
     }
 
-    public void processComplexObject(ObjectNode complexObject)
+    public void processComplexObject(ObjectNode complexObjectViaReturnContext)
     {
-        log.info("Simple processing of a complex : {} ", complexObject);
+        log.info("Simple processing of a complex : {} ", complexObjectViaReturnContext);
     }
 
     public void produceInterimProcessVar(DelegateExecution ex)
@@ -56,7 +60,8 @@ public class ComplexService {
 
     public void consumeInterimProcessVar(DelegateExecution ex)
     {
-        log.info("Consuming the following input : {} ", ex.getVariable("taskOutput"));
-        ex.getVariable("taskOutput");
+        log.info("Consuming the following input(s) : {} and {}",
+                ex.getVariable("complexObjectViaEnv"),
+                ex.getVariable("taskOutput"));
     }
 }

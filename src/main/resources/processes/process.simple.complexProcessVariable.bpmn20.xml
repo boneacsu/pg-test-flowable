@@ -21,7 +21,7 @@
         <sequenceFlow sourceRef="serviceTask1" targetRef="serviceTaskInterim"/>
 
         <serviceTask id="serviceTaskInterim" name="Service Task Interim"
-                     flowable:expression="#{complexService.createComplexObject()}"
+                     flowable:expression="#{complexService.createComplexObject(execution)}"
                      activiti:resultVariable="complexObjectVarRef"/>
 
         <sequenceFlow sourceRef="serviceTaskInterim" targetRef="serviceTask2"/>
